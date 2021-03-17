@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "outDir": "dist",
+    "target": "ES5",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    // "lib": [
+    //   "es2019"
+    // ]
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": true
+}

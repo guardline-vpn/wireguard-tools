@@ -1,0 +1,25 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+
+      - name: Install deps
+        run: yarn
+
+      - name: Build docs
+        run: yarn build:docs
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: docs
+          folder: docs

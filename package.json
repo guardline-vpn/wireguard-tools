@@ -1,0 +1,52 @@
+{
+  "name": "wireguard-tools",
+  "version": "0.0.1",
+  "repository": "https://github.com/guardline-vpn/wireguard-tools",
+  "description": "The best way to interact with WireGuard from Node",
+  "keywords": [
+    "wireguard",
+    "vpn",
+    "wg",
+    "wg-quick"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "src/index.ts",
+  "author": "Guardline",
+  "private": false,
+  "scripts": {
+    "build": "tsc -d",
+    "dev": "nodemon",
+    "watch": "tsc --watch",
+    "dev:test": "ts-node ./test/index.ts",
+    "test": "tsc -d",
+    "build:docs": "typedoc --out docs ./src/index.ts"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src",
+      "test"
+    ],
+    "exec": "yarn dev:test",
+    "ext": "ts"
+  },
+  "dependencies": {
+    "lodash.merge": "^4.6.2",
+    "lodash.mergewith": "^4.6.2",
+    "public-ip": "^4.0.3"
+  },
+  "devDependencies": {
+    "@types/lodash.merge": "^4.6.6",
+    "@types/lodash.mergewith": "^4.6.6",
+    "@types/node": "^14.14.22",
+    "esm": "^3.2.25",
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1",
+    "typedoc": "^0.20.20",
+    "typescript": "^4.1.3"
+  }
+}
