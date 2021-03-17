@@ -68,9 +68,466 @@
 				<a href="#to-use" id="to-use" style="color: inherit; text-decoration: none;">
 					<h2>To use</h2>
 				</a>
+				<p><code>npm i wireguard-tools</code></p>
+				<p>or</p>
+				<p><code>yarn add wireguard-tools</code></p>
+				<a href="#basic-config" id="basic-config" style="color: inherit; text-decoration: none;">
+					<h3>Basic config</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+</code></pre>
+				<a href="#generate-keys" id="generate-keys" style="color: inherit; text-decoration: none;">
+					<h3>Generate Keys</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">publicKey</span><span style="color: #000000">, </span><span style="color: #0070C1">preSharedKey</span><span style="color: #000000">, </span><span style="color: #0070C1">privateKey</span><span style="color: #000000"> } = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">({ </span><span style="color: #001080">preSharedKey:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> })</span>
+
+</code></pre>
+				<a href="#write-to-disk" id="write-to-disk" style="color: inherit; text-decoration: none;">
+					<h3>Write to disk</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
+
+</code></pre>
+				<a href="#parse-config-from-disk" id="parse-config-from-disk" style="color: inherit; text-decoration: none;">
+					<h3>Parse config from disk</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000">, </span><span style="color: #001080">getConfigObjectFromFile</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">thatConfigFromFile</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">getConfigObjectFromFile</span><span style="color: #000000">({ </span><span style="color: #001080">filePath</span><span style="color: #000000"> })</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  ...</span><span style="color: #001080">thatConfigFromFile</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #008000">// Public key will not be available because it&#039;s not saved in the WireGuard config,</span>
+<span style="color: #008000">// so you need to generate keys again (it will use the existing private key)</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()</span>
+</code></pre>
+				<a href="#another-way-to-parse-config-from-disk" id="another-way-to-parse-config-from-disk" style="color: inherit; text-decoration: none;">
+					<h3>Another way to parse config from disk</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">parseFile</span><span style="color: #000000">()</span>
+
+<span style="color: #008000">// Public key will not be available because it&#039;s not saved in the WireGuard config,</span>
+<span style="color: #008000">// so you need to generate keys again (it will use the existing private key)</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()</span>
+</code></pre>
+				<a href="#bring-up-a-wgconfig-as-a-wireguard-interface" id="bring-up-a-wgconfig-as-a-wireguard-interface" style="color: inherit; text-decoration: none;">
+					<h3>Bring up a WgConfig as a WireGuard interface</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">up</span><span style="color: #000000">()</span>
+</code></pre>
+				<a href="#bring-down-a-wgconfig-as-a-wireguard-interface" id="bring-down-a-wgconfig-as-a-wireguard-interface" style="color: inherit; text-decoration: none;">
+					<h3>Bring down a WgConfig as a WireGuard interface</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
+
+<span style="color: #008000">// bring up</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">up</span><span style="color: #000000">()</span>
+
+<span style="color: #008000">// bring down</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">down</span><span style="color: #000000">()</span>
+</code></pre>
+				<a href="#to-change-a-wgconfig-while-up-you-need-to-restart" id="to-change-a-wgconfig-while-up-you-need-to-restart" style="color: inherit; text-decoration: none;">
+					<h3>To change a WgConfig while up, you need to restart</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
+
+<span style="color: #008000">// bring up</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">up</span><span style="color: #000000">()</span>
+
+<span style="color: #008000">// create new key pair</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">({ </span><span style="color: #001080">overwrite:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> })</span>
+
+<span style="color: #008000">// write the file to save</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
+
+<span style="color: #008000">// restart for the changes to take effect</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">restart</span><span style="color: #000000">()</span>
+</code></pre>
+				<a href="#or-use-the-save-shorcut-method-to-write-and-restart" id="or-use-the-save-shorcut-method-to-write-and-restart" style="color: inherit; text-decoration: none;">
+					<h3>Or use the save() shorcut method to write and restart</h3>
+				</a>
+				<p>Note, using this method will start the WireGuard interface unless <code>{ noUp: true }</code> is passed in.</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
+
+<span style="color: #008000">// bring up</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">up</span><span style="color: #000000">()</span>
+
+<span style="color: #008000">// create new key pair</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">({ </span><span style="color: #001080">overwrite:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> })</span>
+
+<span style="color: #008000">// write the file and restart</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">save</span><span style="color: #000000">()</span>
+</code></pre>
+				<a href="#generate-and-add-peers-from-and-to-configs" id="generate-and-add-peers-from-and-to-configs" style="color: inherit; text-decoration: none;">
+					<h3>Generate and add peers from and to configs</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath2</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-client.conf&#039;</span><span style="color: #000000">)</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">server</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.2&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath:</span><span style="color: #000000"> </span><span style="color: #001080">filePath2</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #008000">// gen keys</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">.</span><span style="color: #795E26">all</span><span style="color: #000000">([</span>
+<span style="color: #000000">  </span><span style="color: #001080">server</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">({ </span><span style="color: #001080">preSharedKey:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> }),</span>
+<span style="color: #000000">  </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">({ </span><span style="color: #001080">preSharedKey:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> })</span>
+<span style="color: #000000">])</span>
+
+<span style="color: #008000">// make a peer from server</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">serverAsPeer</span><span style="color: #000000"> = </span><span style="color: #001080">server</span><span style="color: #000000">.</span><span style="color: #795E26">createPeer</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">allowedIps:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.1.1.1/32&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">  </span><span style="color: #001080">preSharedKey:</span><span style="color: #000000"> </span><span style="color: #001080">server</span><span style="color: #000000">.</span><span style="color: #001080">preSharedKey</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #008000">// add that as a peer to client</span>
+<span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">addPeer</span><span style="color: #000000">(</span><span style="color: #001080">serverAsPeer</span><span style="color: #000000">)</span>
+
+<span style="color: #008000">// make a peer from client and add it to server</span>
+<span style="color: #001080">server</span><span style="color: #000000">.</span><span style="color: #795E26">addPeer</span><span style="color: #000000">(</span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">createPeer</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">allowedIps:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1/32&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">  </span><span style="color: #001080">preSharedKey:</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #001080">preSharedKey</span>
+<span style="color: #000000">}))</span>
+</code></pre>
+				<a href="#or-use-the-createpeerpairs-tool-to-do-this-with-ease" id="or-use-the-createpeerpairs-tool-to-do-this-with-ease" style="color: inherit; text-decoration: none;">
+					<h3>Or use the createPeerPairs tool to do this with ease</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000">, </span><span style="color: #001080">createPeerPairs</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #008000">// make a load of configs</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">configs</span><span style="color: #000000">: </span><span style="color: #267F99">WgConfig</span><span style="color: #000000">[] = []</span>
+
+<span style="color: #AF00DB">for</span><span style="color: #000000"> (</span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">i</span><span style="color: #000000"> = </span><span style="color: #098658">1</span><span style="color: #000000">; </span><span style="color: #001080">i</span><span style="color: #000000"> &lt;= </span><span style="color: #098658">10</span><span style="color: #000000">; </span><span style="color: #001080">i</span><span style="color: #000000">++) {</span>
+<span style="color: #000000">  </span><span style="color: #001080">configs</span><span style="color: #000000">.</span><span style="color: #795E26">push</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">`10.10.1.</span><span style="color: #0000FF">${</span><span style="color: #001080">i</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">],</span>
+<span style="color: #000000">      </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">`Client-</span><span style="color: #0000FF">${</span><span style="color: #001080">i</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">filePath:</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">`/guardline-</span><span style="color: #0000FF">${</span><span style="color: #001080">i</span><span style="color: #0000FF">}</span><span style="color: #A31515">.conf`</span><span style="color: #000000">)</span>
+<span style="color: #000000">  }))</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #008000">// get their key pairs</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">.</span><span style="color: #795E26">all</span><span style="color: #000000">(</span><span style="color: #001080">configs</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()))</span>
+
+<span style="color: #008000">// add them all as peers of each other</span>
+<span style="color: #795E26">createPeerPairs</span><span style="color: #000000">(</span><span style="color: #001080">configs</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">config:</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">peerSettings:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">allowedIps:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1/32&#039;</span><span style="color: #000000">]</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}))</span>
+
+<span style="color: #008000">// write them all to disk</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">.</span><span style="color: #795E26">all</span><span style="color: #000000">(</span><span style="color: #001080">configs</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()))</span>
+
+</code></pre>
+				<a href="#or-more-advanced" id="or-more-advanced" style="color: inherit; text-decoration: none;">
+					<h3>Or more advanced</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000">, </span><span style="color: #001080">createPeerPairs</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+
+<span style="color: #008000">// make a load of configs</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">configs</span><span style="color: #000000">: </span><span style="color: #267F99">WgConfig</span><span style="color: #000000">[] = []</span>
+
+<span style="color: #AF00DB">for</span><span style="color: #000000"> (</span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">i</span><span style="color: #000000"> = </span><span style="color: #098658">1</span><span style="color: #000000">; </span><span style="color: #001080">i</span><span style="color: #000000"> &lt;= </span><span style="color: #098658">10</span><span style="color: #000000">; </span><span style="color: #001080">i</span><span style="color: #000000">++) {</span>
+<span style="color: #000000">  </span><span style="color: #001080">configs</span><span style="color: #000000">.</span><span style="color: #795E26">push</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">`10.10.1.</span><span style="color: #0000FF">${</span><span style="color: #001080">i</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">],</span>
+<span style="color: #000000">      </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">`Client-</span><span style="color: #0000FF">${</span><span style="color: #001080">i</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">filePath:</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">`/guardline-</span><span style="color: #0000FF">${</span><span style="color: #001080">i</span><span style="color: #0000FF">}</span><span style="color: #A31515">.conf`</span><span style="color: #000000">)</span>
+<span style="color: #000000">  }))</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #008000">// get their key pairs</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">.</span><span style="color: #795E26">all</span><span style="color: #000000">(</span><span style="color: #001080">configs</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()))</span>
+
+<span style="color: #008000">// add them all as peers of each other</span>
+<span style="color: #795E26">createPeerPairs</span><span style="color: #000000">(</span><span style="color: #001080">configs</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">config:</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">peerSettings</span><span style="color: #001080">:</span><span style="color: #000000"> ({ </span><span style="color: #001080">thisConfig</span><span style="color: #000000">, </span><span style="color: #001080">peerConfig</span><span style="color: #000000"> }) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">peerAddress</span><span style="color: #000000"> = </span><span style="color: #001080">peerConfig</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">address</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">peerPresharedKey</span><span style="color: #000000"> = </span><span style="color: #001080">peerConfig</span><span style="color: #000000">.</span><span style="color: #001080">preSharedKey</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">return</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">allowedIps:</span><span style="color: #000000"> </span><span style="color: #001080">peerAddress</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">preSharedKey:</span><span style="color: #000000"> </span><span style="color: #001080">peerPresharedKey</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #001080">peerConfig</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">persistentKeepalive:</span><span style="color: #000000"> </span><span style="color: #001080">thisConfig</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">address</span><span style="color: #000000">.</span><span style="color: #795E26">includes</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">) ? </span><span style="color: #098658">25</span><span style="color: #000000"> : </span><span style="color: #0000FF">undefined</span>
+<span style="color: #000000">      }</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}))</span>
+
+<span style="color: #008000">// write them all to disk</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">.</span><span style="color: #795E26">all</span><span style="color: #000000">(</span><span style="color: #001080">configs</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()))</span>
+
+</code></pre>
+				<a href="#random-helpers" id="random-helpers" style="color: inherit; text-decoration: none;">
+					<h3>Random helpers</h3>
+				</a>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">getMyPublicIp</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">checkWgIsInstalled</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">generateKeyPair</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">generateConfigString</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">parseConfigString</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">getConfigStringFromFile</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">getConfigObjectFromFile</span><span style="color: #000000">,</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+
+<span style="color: #008000">// get your public ip</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">myIp</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">getMyPublicIp</span><span style="color: #000000">()</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">myIp</span><span style="color: #000000">) </span><span style="color: #008000">// 271.356.61.12</span>
+
+
+<span style="color: #008000">// check WireGuard is installed on the system and print version</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">version</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">checkWgIsInstalled</span><span style="color: #000000">()</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">version</span><span style="color: #000000">) </span><span style="color: #008000">// wireguard-tools v1.0.20200827 - https://git.zx2c4.com/wireguard-tools/</span>
+
+
+<span style="color: #008000">// generate a WG key pair (needs wg installed on system)</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">publicKey</span><span style="color: #000000">, </span><span style="color: #0070C1">privateKey</span><span style="color: #000000">, </span><span style="color: #0070C1">preSharedKey</span><span style="color: #000000"> } = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">generateKeyPair</span><span style="color: #000000">({ </span><span style="color: #001080">preSharedKey:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> })</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">publicKey</span><span style="color: #000000">, </span><span style="color: #001080">privateKey</span><span style="color: #000000">, </span><span style="color: #001080">preSharedKey</span><span style="color: #000000"> })</span>
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * {</span>
+<span style="color: #008000"> *   publicKey: &#039;257CQncfArO8QLIcc23Hhyq2IvnBszCl8XUU9TA42Q4=&#039;,</span>
+<span style="color: #008000"> *   privateKey: &#039;6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q=&#039;,</span>
+<span style="color: #008000"> *   preSharedKey: &#039;NlqKE2Ja7AAQhDZpevUwi7pjlnU7HZgcPLI0F/gVPfs=&#039;</span>
+<span style="color: #008000"> * }</span>
+<span style="color: #008000"> */</span>
+
+
+<span style="color: #008000">// Generate a string version of the WgConfig suitable for saving to a Wireguard Config file</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">configString</span><span style="color: #000000"> = </span><span style="color: #795E26">generateConfigString</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Client 1&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">peers:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">    {</span>
+<span style="color: #000000">      </span><span style="color: #001080">allowedIps:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1/32&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">      </span><span style="color: #001080">publicKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s=&#039;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  ]</span>
+<span style="color: #000000">})</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">configString</span><span style="color: #000000">)</span>
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * [Interface]</span>
+<span style="color: #008000"> * # Name = Client 1</span>
+<span style="color: #008000"> * Address = 10.10.1.1</span>
+<span style="color: #008000"> * PrivateKey = 6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q</span>
+<span style="color: #008000"> * </span>
+<span style="color: #008000"> * [Peer]</span>
+<span style="color: #008000"> * PublicKey = FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s=</span>
+<span style="color: #008000"> * AllowedIPs = 10.10.1.1/32</span>
+<span style="color: #008000"> */</span>
+
+
+<span style="color: #008000">// Parse a config object from a WireGuard config file string</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">configObj</span><span style="color: #000000"> = </span><span style="color: #795E26">parseConfigString</span><span style="color: #000000">(</span><span style="color: #001080">configString</span><span style="color: #000000">)</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">configObj</span><span style="color: #000000">)</span>
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * {</span>
+<span style="color: #008000"> *   wgInterface: {</span>
+<span style="color: #008000"> *     address: [ &#039;10.10.1.1&#039; ],</span>
+<span style="color: #008000"> *     privateKey: &#039;6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q&#039;,</span>
+<span style="color: #008000"> *     name: &#039;Client 1&#039;</span>
+<span style="color: #008000"> *   },</span>
+<span style="color: #008000"> *   peers: [</span>
+<span style="color: #008000"> *     {</span>
+<span style="color: #008000"> *       allowedIps: [Array],</span>
+<span style="color: #008000"> *       publicKey: &#039;FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s=&#039;</span>
+<span style="color: #008000"> *     }</span>
+<span style="color: #008000"> *   ]</span>
+<span style="color: #008000"> * }</span>
+<span style="color: #008000"> */</span>
+
+
+<span style="color: #008000">// Get a raw wireguard config string from a file</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">confStringFromFile</span><span style="color: #000000"> = </span><span style="color: #795E26">getConfigStringFromFile</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath:</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/wg0.conf&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">})</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">confStringFromFile</span><span style="color: #000000">)</span>
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * [Interface]</span>
+<span style="color: #008000"> * # Name = Client 1</span>
+<span style="color: #008000"> * Address = 10.10.1.1</span>
+<span style="color: #008000"> * PrivateKey = 6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * [Peer]</span>
+<span style="color: #008000"> * PublicKey = FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s=</span>
+<span style="color: #008000"> * AllowedIPs = 10.10.1.1/32</span>
+<span style="color: #008000"> */</span>
+
+
+<span style="color: #008000">// Get a parsed WgConfigObject from a wireguard config file</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">confObjFromFile</span><span style="color: #000000"> = </span><span style="color: #795E26">getConfigObjectFromFile</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">filePath:</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/wg0.conf&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">})</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">confObjFromFile</span><span style="color: #000000">)</span>
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * {</span>
+<span style="color: #008000"> *   wgInterface: {</span>
+<span style="color: #008000"> *     address: [ &#039;10.10.1.1&#039; ],</span>
+<span style="color: #008000"> *     privateKey: &#039;6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q&#039;,</span>
+<span style="color: #008000"> *     name: &#039;Client 1&#039;</span>
+<span style="color: #008000"> *   },</span>
+<span style="color: #008000"> *   peers: [</span>
+<span style="color: #008000"> *     {</span>
+<span style="color: #008000"> *       allowedIps: [Array],</span>
+<span style="color: #008000"> *       publicKey: &#039;FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s=&#039;</span>
+<span style="color: #008000"> *     }</span>
+<span style="color: #008000"> *   ]</span>
+<span style="color: #008000"> * }</span>
+<span style="color: #008000"> */</span>
+</code></pre>
+				<a href="#extensive-example" id="extensive-example" style="color: inherit; text-decoration: none;">
+					<h3>Extensive example</h3>
+				</a>
 				<p>Here is one extensive example of usage that should give you an idea of what to do:</p>
 				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000">, </span><span style="color: #001080">getConfigObjectFromFile</span><span style="color: #000000">, </span><span style="color: #001080">createPeerPairs</span><span style="color: #000000">, </span><span style="color: #001080">checkWgIsInstalled</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;../src&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000">, </span><span style="color: #001080">getConfigObjectFromFile</span><span style="color: #000000">, </span><span style="color: #001080">createPeerPairs</span><span style="color: #000000">, </span><span style="color: #001080">checkWgIsInstalled</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
 
