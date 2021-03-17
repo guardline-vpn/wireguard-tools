@@ -21,11 +21,16 @@ interface GenerateKeysOptions {
 
 /** A Javascript object representation of a WireGuard config file with some extras */
 export class WgConfig implements WgConfigObject {
+  /** Defines the VPN settings for the local node. */
   wgInterface: WgConfigObject['wgInterface']
+  /** An array of VPN settings for remote peers */
   peers: WgConfigObject['peers']
+  /** A place to keep the public key for this node (it's not saved in the WireGuard config) */
   publicKey: WgConfigObject['publicKey']
+  /** A place to keep the pre-shared key for this node (it's not saved in the WireGuard config) */
   preSharedKey: WgConfigObject['preSharedKey']
 
+  /** The file path where this config should be written to by default */
   filePath: string
 
   /** creates a new WgConfig */

@@ -6,7 +6,7 @@ This lib includes a class and set of helper functions for working with WireGuard
 
 [Check out the docs](https://guardline-vpn.github.io/wireguard-tools/) with 💖 from [typedoc](https://typedoc.org/):
 
-https://guardline-vpn.github.io/wireguard-tools/
+[https://guardline-vpn.github.io/wireguard-tools/](https://guardline-vpn.github.io/wireguard-tools/)
 
 ## To use
 
