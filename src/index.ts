@@ -1,3 +1,5 @@
+export { WgConfigObject, WgConfigInterface, WgConfigPeer } from './types/WgConfigObject'
+
 export { WgConfig } from './WgConfig'
 export { writeConfig } from './utils/writeConfig'
 export { getMyPublicIp } from './utils/getMyPublicIp'
