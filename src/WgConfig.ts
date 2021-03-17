@@ -7,16 +7,9 @@ import { writeConfig } from './utils/writeConfig'
 import mergeWith from 'lodash.mergewith'
 import { exec } from './utils/exec'
 
-interface CreatePeerPairsOptions {
-  /** The config to derive public key from for the peer */
-  config: WgConfig,
-  /** The peer settings to apply when adding this config as a peer */
-  peerSettings: Omit<WgConfigPeer, 'publicKey'> | ((args: { thisConfig: WgConfig, peerConfig: WgConfig }) => Omit<WgConfigPeer, 'publicKey'>)
-}
-
 interface GenerateKeysOptions {
   /** Also create a preshared key */
-  preSharedKey: boolean
+  preSharedKey?: boolean
   /**
    * Overwrite this object's private key if it already exists
    * 
@@ -48,15 +41,18 @@ export class WgConfig implements WgConfigObject {
   toString() {
     return generateConfigString(this)
   }
+
   /** JSON.stringify this WgConfig object */
   toJson() {
     return JSON.stringify(this)
   }
+
   /** Parse a WireGuard config file in the form of a string into this WgConfig object */
   parse(configAsString: string) {
     const parsedObj = parseConfigString(configAsString)
     Object.assign(this, parsedObj)
   }
+
   /** Parse a WireGuard config file from it's path in the file system */
   async parseFile(filePath?: string) {
     filePath = filePath || this.filePath
@@ -97,8 +93,8 @@ export class WgConfig implements WgConfigObject {
    * existing with the new. The allowedIps will be replaced by the new peer's allowedIps unless
    * { mergeAllowedIps: true } is passed in as settings
    */
-  addPeer(peer: WgConfigPeer, settings: { mergeAllowedIps: boolean }) {
-    const { mergeAllowedIps } = settings
+  addPeer(peer: WgConfigPeer, settings?: { mergeAllowedIps?: boolean }) {
+    const mergeAllowedIps = settings?.mergeAllowedIps
     if (!this.peers) this.peers = []
     // check if peer exists by public key
     const i = this.peers.map(x => x.publicKey).indexOf(peer.publicKey)
@@ -124,29 +120,6 @@ export class WgConfig implements WgConfigObject {
     }
   }
 
-  /**
-   * Create peer pairs from more than one WgConfig object.
-   * 
-   * Will add wgConfigs[0] as a peer in wgConfigs[1] and wgConfigs[1] as a peer in wgConfigs[0] etc.
-   * Will fail and error if
-   */
-  createPeerPairs(pairs: [CreatePeerPairsOptions, CreatePeerPairsOptions, ...CreatePeerPairsOptions[]]) {
-    for (let i = 0; i < pairs.length; i++) {
-      const thisConfig = pairs[i]
-      for (let subI = 0; subI < pairs.length; subI++) {
-        const peerConfig = pairs[subI]
-        if (thisConfig.config.publicKey === peerConfig.config.publicKey) continue
-        const peerSettings = typeof peerConfig.peerSettings === 'function'
-          ? peerConfig.peerSettings({ thisConfig: thisConfig.config, peerConfig: peerConfig.config })
-          : peerConfig.peerSettings
-        const thisConfigPreSharedKey = thisConfig.config.preSharedKey
-        if (thisConfigPreSharedKey) peerSettings.preSharedKey = thisConfigPreSharedKey
-        const peer = peerConfig.config.createPeer(peerSettings)
-        thisConfig.config.addPeer(peer, { mergeAllowedIps: false })
-      }
-    }
-  }
-
   /** Creates a WfgConfigPeer object from this WgCongig object */
   createPeer(settings: Omit<WgConfigPeer, 'publicKey'>) {
     if (!this.publicKey) throw new Error('WgConfig object has no public key. Run generateKeys() first')
@@ -155,6 +128,13 @@ export class WgConfig implements WgConfigObject {
       ...settings
     }
     return peer
+  }
+
+  /** Get a peer from the peer array by it's public key */
+  getPeer(publicKey: string) {
+    if (!publicKey) return undefined
+    if (!this.peers || !this.peers.length) return undefined
+    return this.peers.find(x => x.publicKey === publicKey)
   }
 
   /** brings up the wireguard interface */
@@ -201,7 +181,7 @@ export class WgConfig implements WgConfigObject {
 
   /** restarts the wireguard interface */
   async restart(filePath?: string) {
-    await this.down()
-    await this.up()
+    await this.down(filePath)
+    await this.up(filePath)
   }
 }
