@@ -1,12 +1,16 @@
 # Wireguard tools for Nodejs
 
-This lib is for directly interacting with `wg` and `wg-quick` through node. It also includes a class for working with WireGuard config files in javascript/typescript.
+This lib includes a class and set of helper functions for working with WireGuard config files in javascript/typescript.
 
-Fully Typed!
+100% Typescript!
+
+[Check out the docs](https://guardline-vpn.github.io/wireguard-tools/) with 💖 from [typedoc](https://typedoc.org/):
+
+https://guardline-vpn.github.io/wireguard-tools/
 
 ## To use
 
-Here are some examples of usage:
+Here is one extensive example of usage that should give you an idea of what to do:
 
 ```ts
 import path from 'path'
@@ -49,7 +53,11 @@ const test = async () => {
 
     // read that file into another config object
     const thatConfigFromFile = await getConfigObjectFromFile({ filePath })
-    const config2 = new WgConfig({ ...thatConfigFromFile, filePath })
+    const config2FilePath = path.join(__dirname, '/configs', '/guardline-server-2.conf')
+    const config2 = new WgConfig({
+      ...thatConfigFromFile,
+      filePath: config2FilePath
+    })
 
     // both configs private key will be the same because config2 has been parsed
     // from the file written by config
