@@ -1,0 +1,412 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>WgConfigInterface | wireguard-tools</title>
+	<meta name="description" content="Documentation for wireguard-tools">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">wireguard-tools</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">wireguard-tools</a>
+				</li>
+				<li>
+					<a href="wgconfiginterface.html">WgConfigInterface</a>
+				</li>
+			</ul>
+			<h1>Interface WgConfigInterface</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Defines the VPN settings for the local node.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">WgConfigInterface</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#address" class="tsd-kind-icon">address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#dns" class="tsd-kind-icon">dns</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#listenport" class="tsd-kind-icon">listen<wbr>Port</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#mtu" class="tsd-kind-icon">mtu</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#postdown" class="tsd-kind-icon">post<wbr>Down</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#postup" class="tsd-kind-icon">post<wbr>Up</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#predown" class="tsd-kind-icon">pre<wbr>Down</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#preup" class="tsd-kind-icon">pre<wbr>Up</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#privatekey" class="tsd-kind-icon">private<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="wgconfiginterface.html#table" class="tsd-kind-icon">table</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="address" class="tsd-anchor"></a>
+					<h3>address</h3>
+					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">...</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L14">types/WgConfigObject.ts:14</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines what address range the local node should route traffic for.
+								Depending on whether the node is a simple client joining the VPN subnet, or a bounce server that&#39;s relaying traffic
+								between multiple clients, this can be set to a single IP of the node itself (specified with CIDR notation),
+							e.g. 192.0.2.3/32), or a range of IPv4/IPv6 subnets that the node can route traffic for.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="dns" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> dns</h3>
+					<div class="tsd-signature tsd-kind-icon">dns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L30">types/WgConfigObject.ts:30</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The DNS server(s) to announce to VPN clients via DHCP, most clients will use this server for DNS requests over the VPN,
+							but clients can also override this value locally on their nodes</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="listenport" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> listen<wbr>Port</h3>
+					<div class="tsd-signature tsd-kind-icon">listen<wbr>Port<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L19">types/WgConfigObject.ts:19</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>When the node is acting as a public bounce server, it should hardcode a port to listen for incoming VPN connections
+							from the public internet. Clients not acting as relays should not set this value.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="mtu" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> mtu</h3>
+					<div class="tsd-signature tsd-kind-icon">mtu<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L43">types/WgConfigObject.ts:43</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Optionally defines the maximum transmission unit (MTU, aka packet/frame size) to use when connecting to the peer,
+								not necessary to configure for most setups. The MTU is automatically determined from the endpoint addresses or
+							the system default route, which is usually a sane choice.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L7">types/WgConfigObject.ts:7</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>This is just a standard comment in INI syntax used to help keep track of which config section belongs to which node,
+							it&#39;s completely ignored by WireGuard and has no effect on VPN behavior.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="postdown" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> post<wbr>Down</h3>
+					<div class="tsd-signature tsd-kind-icon">post<wbr>Down<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L63">types/WgConfigObject.ts:63</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Optionally run bash commands after the interface is brought down.
+							These will be added to the config file in order and executed in order. Position 0 in array will be run first.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="postup" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> post<wbr>Up</h3>
+					<div class="tsd-signature tsd-kind-icon">post<wbr>Up<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L53">types/WgConfigObject.ts:53</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Optionally run bash commands after the interface is brought up.
+							These will be added to the config file in order and executed in order. Position 0 in array will be run first.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="predown" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> pre<wbr>Down</h3>
+					<div class="tsd-signature tsd-kind-icon">pre<wbr>Down<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L58">types/WgConfigObject.ts:58</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Optionally run bash commands before the interface is brought down.
+							These will be added to the config file in order and executed in order. Position 0 in array will be run first.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="preup" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> pre<wbr>Up</h3>
+					<div class="tsd-signature tsd-kind-icon">pre<wbr>Up<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L48">types/WgConfigObject.ts:48</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Optionally run bash commands before the interface is brought up.
+							These will be added to the config file in order and executed in order. Position 0 in array will be run first.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="privatekey" class="tsd-anchor"></a>
+					<h3>private<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">private<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L25">types/WgConfigObject.ts:25</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>This is the private key for the local node, never shared with other servers.
+								All nodes must have a private key set, regardless of whether they are public bounce servers relaying traffic,
+							or simple clients joining the VPN.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="table" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> table</h3>
+					<div class="tsd-signature tsd-kind-icon">table<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/b544670/src/types/WgConfigObject.ts#L37">types/WgConfigObject.ts:37</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Optionally defines which routing table to use for the WireGuard routes, not necessary to configure for most setups.
+								There are two special values:
+								-<strong>‘off’</strong>: disables the creation of routes altogether, and
+							-<strong>‘auto’</strong>: (the default if omitted) adds routes to the default table and enables special handling of default routes.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/wgconfig.html" class="tsd-kind-icon">Wg<wbr>Config</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="wgconfiginterface.html" class="tsd-kind-icon">Wg<wbr>Config<wbr>Interface</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#address" class="tsd-kind-icon">address</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#dns" class="tsd-kind-icon">dns</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#listenport" class="tsd-kind-icon">listen<wbr>Port</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#mtu" class="tsd-kind-icon">mtu</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#postdown" class="tsd-kind-icon">post<wbr>Down</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#postup" class="tsd-kind-icon">post<wbr>Up</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#predown" class="tsd-kind-icon">pre<wbr>Down</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#preup" class="tsd-kind-icon">pre<wbr>Up</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#privatekey" class="tsd-kind-icon">private<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="wgconfiginterface.html#table" class="tsd-kind-icon">table</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="wgconfigobject.html" class="tsd-kind-icon">Wg<wbr>Config<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="wgconfigpeer.html" class="tsd-kind-icon">Wg<wbr>Config<wbr>Peer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#checkwgisinstalled" class="tsd-kind-icon">check<wbr>WgIs<wbr>Installed</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#createpeerpairs" class="tsd-kind-icon">create<wbr>Peer<wbr>Pairs</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#generateconfigstring" class="tsd-kind-icon">generate<wbr>Config<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#generatekeypair" class="tsd-kind-icon">generate<wbr>Key<wbr>Pair</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#getconfigobjectfromfile" class="tsd-kind-icon">get<wbr>Config<wbr>Object<wbr>From<wbr>File</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#getconfigstringfromfile" class="tsd-kind-icon">get<wbr>Config<wbr>String<wbr>From<wbr>File</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#getmypublicip" class="tsd-kind-icon">get<wbr>MyPublic<wbr>Ip</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#makesuredirexists" class="tsd-kind-icon">make<wbr>Sure<wbr>Dir<wbr>Exists</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#makesurefileexists" class="tsd-kind-icon">make<wbr>Sure<wbr>File<wbr>Exists</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#parseconfigstring" class="tsd-kind-icon">parse<wbr>Config<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../modules.html#writeconfig" class="tsd-kind-icon">write<wbr>Config</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
