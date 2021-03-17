@@ -14,7 +14,7 @@ interface CreatePeerPairsOptions {
  * Will add wgConfigs[0] as a peer in wgConfigs[1] and wgConfigs[1] as a peer in wgConfigs[0] etc.
  * Will fail and error if
  */
-export const createPeerPairs = (pairs: [CreatePeerPairsOptions, CreatePeerPairsOptions, ...CreatePeerPairsOptions[]]) => {
+export const createPeerPairs = (pairs: CreatePeerPairsOptions[]) => {
   for (let i = 0; i < pairs.length; i++) {
     const thisConfig = pairs[i]
     for (let subI = 0; subI < pairs.length; subI++) {

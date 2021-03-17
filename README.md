@@ -10,11 +10,484 @@ This lib includes a class and set of helper functions for working with WireGuard
 
 ## To use
 
+`npm i wireguard-tools`
+
+or
+
+`yarn add wireguard-tools`
+
+### Basic config
+
+```ts
+import path from 'path'
+import { WgConfig } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const config1 = new WgConfig({
+  wgInterface: {
+    address: ['10.10.1.1'],
+    privateKey: ''
+  },
+  filePath
+})
+
+```
+
+### Generate Keys
+
+```ts
+import path from 'path'
+import { WgConfig } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const config1 = new WgConfig({
+  wgInterface: {
+    address: ['10.10.1.1'],
+    privateKey: ''
+  },
+  filePath
+})
+
+const { publicKey, preSharedKey, privateKey } = await config1.generateKeys({ preSharedKey: true })
+
+```
+
+### Write to disk
+
+```ts
+import path from 'path'
+import { WgConfig } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const config1 = new WgConfig({
+  wgInterface: {
+    address: ['10.10.1.1'],
+    privateKey: ''
+  },
+  filePath
+})
+
+await config1.generateKeys()
+await config1.writeToFile()
+
+```
+
+### Parse config from disk
+
+```ts
+import path from 'path'
+import { WgConfig, getConfigObjectFromFile } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const thatConfigFromFile = await getConfigObjectFromFile({ filePath })
+
+const config1 = new WgConfig({
+  ...thatConfigFromFile,
+  filePath
+})
+
+// Public key will not be available because it's not saved in the WireGuard config,
+// so you need to generate keys again (it will use the existing private key)
+await config1.generateKeys()
+```
+
+### Another way to parse config from disk
+
+```ts
+import path from 'path'
+import { WgConfig } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const config1 = new WgConfig({
+  wgInterface: {
+    address: [''],
+    privateKey: ''
+  },
+  filePath
+})
+
+await config1.parseFile()
+
+// Public key will not be available because it's not saved in the WireGuard config,
+// so you need to generate keys again (it will use the existing private key)
+await config1.generateKeys()
+```
+
+### Bring up a WgConfig as a WireGuard interface
+
+```ts
+import path from 'path'
+import { WgConfig } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const config1 = new WgConfig({
+  wgInterface: {
+    address: ['10.10.1.1'],
+    privateKey: ''
+  },
+  filePath
+})
+
+await config1.generateKeys()
+await config1.writeToFile()
+
+await config1.up()
+```
+
+### Bring down a WgConfig as a WireGuard interface
+
+```ts
+import path from 'path'
+import { WgConfig } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const config1 = new WgConfig({
+  wgInterface: {
+    address: ['10.10.1.1'],
+    privateKey: ''
+  },
+  filePath
+})
+
+await config1.generateKeys()
+await config1.writeToFile()
+
+// bring up
+await config1.up()
+
+// bring down
+await config1.down()
+```
+
+### To change a WgConfig while up, you need to restart
+
+```ts
+import path from 'path'
+import { WgConfig } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const config1 = new WgConfig({
+  wgInterface: {
+    address: ['10.10.1.1'],
+    privateKey: ''
+  },
+  filePath
+})
+
+await config1.generateKeys()
+await config1.writeToFile()
+
+// bring up
+await config1.up()
+
+// create new key pair
+await config1.generateKeys({ overwrite: true })
+
+// write the file to save
+await config1.writeToFile()
+
+// restart for the changes to take effect
+await config1.restart()
+```
+
+### Or use the save() shorcut method to write and restart
+
+Note, using this method will start the WireGuard interface unless `{ noUp: true }` is passed in.
+
+```ts
+import path from 'path'
+import { WgConfig } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const config1 = new WgConfig({
+  wgInterface: {
+    address: ['10.10.1.1'],
+    privateKey: ''
+  },
+  filePath
+})
+
+await config1.generateKeys()
+await config1.writeToFile()
+
+// bring up
+await config1.up()
+
+// create new key pair
+await config1.generateKeys({ overwrite: true })
+
+// write the file and restart
+await config1.save()
+```
+
+### Generate and add peers from and to configs
+
+```ts
+import path from 'path'
+import { WgConfig } from 'wireguard-tools'
+
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+const filePath2 = path.join(__dirname, '/configs', '/guardline-client.conf')
+
+const server = new WgConfig({
+  wgInterface: {
+    address: ['10.10.1.1'],
+    privateKey: ''
+  },
+  filePath
+})
+
+const client = new WgConfig({
+  wgInterface: {
+    address: ['10.10.1.2'],
+    privateKey: ''
+  },
+  filePath: filePath2
+})
+
+// gen keys
+await Promise.all([
+  server.generateKeys({ preSharedKey: true }),
+  client.generateKeys({ preSharedKey: true })
+])
+
+// make a peer from server
+const serverAsPeer = server.createPeer({
+  allowedIps: ['10.1.1.1/32'],
+  preSharedKey: server.preSharedKey
+})
+
+// add that as a peer to client
+client.addPeer(serverAsPeer)
+
+// make a peer from client and add it to server
+server.addPeer(client.createPeer({
+  allowedIps: ['10.10.1.1/32'],
+  preSharedKey: client.preSharedKey
+}))
+```
+
+### Or use the createPeerPairs tool to do this with ease
+
+```ts
+import path from 'path'
+import { WgConfig, createPeerPairs } from 'wireguard-tools'
+
+// make a load of configs
+let configs: WgConfig[] = []
+
+for (let i = 1; i <= 10; i++) {
+  configs.push(new WgConfig({
+    wgInterface: {
+      address: [`10.10.1.${i}`],
+      privateKey: '',
+      name: `Client-${i}`
+    },
+    filePath: path.join(__dirname, '/configs', `/guardline-${i}.conf`)
+  }))
+}
+
+// get their key pairs
+await Promise.all(configs.map(x => x.generateKeys()))
+
+// add them all as peers of each other
+createPeerPairs(configs.map(x => {
+  return {
+    config: x,
+    peerSettings: {
+      allowedIps: ['10.10.1.1/32']
+    }
+  }
+}))
+
+// write them all to disk
+await Promise.all(configs.map(x => x.writeToFile()))
+
+```
+
+### Or more advanced
+
+```ts
+import path from 'path'
+import { WgConfig, createPeerPairs } from 'wireguard-tools'
+
+// make a load of configs
+let configs: WgConfig[] = []
+
+for (let i = 1; i <= 10; i++) {
+  configs.push(new WgConfig({
+    wgInterface: {
+      address: [`10.10.1.${i}`],
+      privateKey: '',
+      name: `Client-${i}`
+    },
+    filePath: path.join(__dirname, '/configs', `/guardline-${i}.conf`)
+  }))
+}
+
+// get their key pairs
+await Promise.all(configs.map(x => x.generateKeys()))
+
+// add them all as peers of each other
+createPeerPairs(configs.map(x => {
+  return {
+    config: x,
+    peerSettings: ({ thisConfig, peerConfig }) => {
+      const peerAddress = peerConfig.wgInterface.address
+      const peerPresharedKey = peerConfig.preSharedKey
+      return {
+        allowedIps: peerAddress,
+        preSharedKey: peerPresharedKey,
+        name: peerConfig.wgInterface.name,
+        persistentKeepalive: thisConfig.wgInterface.address.includes('10.10.1.1') ? 25 : undefined
+      }
+    }
+  }
+}))
+
+// write them all to disk
+await Promise.all(configs.map(x => x.writeToFile()))
+
+```
+
+### Random helpers
+
+```ts
+import path from 'path'
+import {
+  getMyPublicIp,
+  checkWgIsInstalled,
+  generateKeyPair,
+  generateConfigString,
+  parseConfigString,
+  getConfigStringFromFile,
+  getConfigObjectFromFile,
+} from ''
+
+// get your public ip
+const myIp = await getMyPublicIp()
+console.log(myIp) // 271.356.61.12
+
+
+// check WireGuard is installed on the system and print version
+const version = await checkWgIsInstalled()
+console.log(version) // wireguard-tools v1.0.20200827 - https://git.zx2c4.com/wireguard-tools/
+
+
+// generate a WG key pair (needs wg installed on system)
+const { publicKey, privateKey, preSharedKey } = await generateKeyPair({ preSharedKey: true })
+console.log({ publicKey, privateKey, preSharedKey })
+/**
+ * {
+ *   publicKey: '257CQncfArO8QLIcc23Hhyq2IvnBszCl8XUU9TA42Q4=',
+ *   privateKey: '6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q=',
+ *   preSharedKey: 'NlqKE2Ja7AAQhDZpevUwi7pjlnU7HZgcPLI0F/gVPfs='
+ * }
+ */
+
+
+// Generate a string version of the WgConfig suitable for saving to a Wireguard Config file
+const configString = generateConfigString({
+  wgInterface: {
+    name: 'Client 1',
+    address: ['10.10.1.1'],
+    privateKey: '6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q'
+  },
+  peers: [
+    {
+      allowedIps: ['10.10.1.1/32'],
+      publicKey: 'FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s='
+    }
+  ]
+})
+console.log(configString)
+/**
+ * [Interface]
+ * # Name = Client 1
+ * Address = 10.10.1.1
+ * PrivateKey = 6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q
+ * 
+ * [Peer]
+ * PublicKey = FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s=
+ * AllowedIPs = 10.10.1.1/32
+ */
+
+
+// Parse a config object from a WireGuard config file string
+const configObj = parseConfigString(configString)
+console.log(configObj)
+/**
+ * {
+ *   wgInterface: {
+ *     address: [ '10.10.1.1' ],
+ *     privateKey: '6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q',
+ *     name: 'Client 1'
+ *   },
+ *   peers: [
+ *     {
+ *       allowedIps: [Array],
+ *       publicKey: 'FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s='
+ *     }
+ *   ]
+ * }
+ */
+
+
+// Get a raw wireguard config string from a file
+const confStringFromFile = getConfigStringFromFile({
+  filePath: path.join(__dirname, '/configs', '/wg0.conf')
+})
+console.log(confStringFromFile)
+/**
+ * [Interface]
+ * # Name = Client 1
+ * Address = 10.10.1.1
+ * PrivateKey = 6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q
+ *
+ * [Peer]
+ * PublicKey = FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s=
+ * AllowedIPs = 10.10.1.1/32
+ */
+
+
+// Get a parsed WgConfigObject from a wireguard config file
+const confObjFromFile = getConfigObjectFromFile({
+  filePath: path.join(__dirname, '/configs', '/wg0.conf')
+})
+console.log(confObjFromFile)
+/**
+ * {
+ *   wgInterface: {
+ *     address: [ '10.10.1.1' ],
+ *     privateKey: '6AgToMLuTa3lQMIMwIBVkhwSM0PVLCZD1FpqU5y0l2Q',
+ *     name: 'Client 1'
+ *   },
+ *   peers: [
+ *     {
+ *       allowedIps: [Array],
+ *       publicKey: 'FoSq0MiHw9nuHMiJcD2vPCzQScmn1Hu0ctfKfSfhp3s='
+ *     }
+ *   ]
+ * }
+ */
+```
+
+### Extensive example
+
 Here is one extensive example of usage that should give you an idea of what to do:
 
 ```ts
 import path from 'path'
-import { WgConfig, getConfigObjectFromFile, createPeerPairs, checkWgIsInstalled } from '../src'
+import { WgConfig, getConfigObjectFromFile, createPeerPairs, checkWgIsInstalled } from 'wireguard-tools'
 
 const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
 

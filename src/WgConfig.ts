@@ -189,4 +189,12 @@ export class WgConfig implements WgConfigObject {
     await this.down(filePath)
     await this.up(filePath)
   }
+
+  /** Saves the config to file and restarts it unless `{ noUp: true }` is passed */
+  async save(opts?: { filePath?: string, noUp: boolean }) {
+    await this.writeToFile(opts?.filePath)
+    if (!opts?.noUp) {
+      await this.restart(opts?.filePath)
+    }
+  }
 }
