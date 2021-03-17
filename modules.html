@@ -71,6 +71,7 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function"><a href="modules.html#checkwgisinstalled" class="tsd-kind-icon">check<wbr>WgIs<wbr>Installed</a></li>
+								<li class="tsd-kind-function"><a href="modules.html#createpeerpairs" class="tsd-kind-icon">create<wbr>Peer<wbr>Pairs</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#generateconfigstring" class="tsd-kind-icon">generate<wbr>Config<wbr>String</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#generatekeypair" class="tsd-kind-icon">generate<wbr>Key<wbr>Pair</a></li>
 								<li class="tsd-kind-function"><a href="modules.html#getconfigobjectfromfile" class="tsd-kind-icon">get<wbr>Config<wbr>Object<wbr>From<wbr>File</a></li>
@@ -97,7 +98,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/checkWgIsInstalled.ts#L8">utils/checkWgIsInstalled.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/checkWgIsInstalled.ts#L8">utils/checkWgIsInstalled.ts:8</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -111,6 +112,36 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="createpeerpairs" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> create<wbr>Peer<wbr>Pairs</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Peer<wbr>Pairs<span class="tsd-signature-symbol">(</span>pairs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">CreatePeerPairsOptions</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">CreatePeerPairsOptions</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">...</span><span class="tsd-signature-type">CreatePeerPairsOptions</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/createPeerPairs.ts#L17">utils/createPeerPairs.ts:17</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create peer pairs from more than one WgConfig object.</p>
+								</div>
+								<p>Will add wgConfigs[0] as a peer in wgConfigs[1] and wgConfigs[1] as a peer in wgConfigs[0] etc.
+								Will fail and error if</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>pairs: <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">CreatePeerPairsOptions</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">CreatePeerPairsOptions</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">...</span><span class="tsd-signature-type">CreatePeerPairsOptions</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="generateconfigstring" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> generate<wbr>Config<wbr>String</h3>
 					<ul class="tsd-signatures tsd-kind-function">
@@ -120,7 +151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/configParser.ts#L33">utils/configParser.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/configParser.ts#L33">utils/configParser.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -148,7 +179,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/generateKeyPair.ts#L21">utils/generateKeyPair.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/generateKeyPair.ts#L21">utils/generateKeyPair.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -177,7 +208,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/getConfigFromFile.ts#L20">utils/getConfigFromFile.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/getConfigFromFile.ts#L20">utils/getConfigFromFile.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -205,7 +236,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/getConfigFromFile.ts#L12">utils/getConfigFromFile.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/getConfigFromFile.ts#L12">utils/getConfigFromFile.ts:12</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -233,7 +264,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/getMyPublicIp.ts#L6">utils/getMyPublicIp.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/getMyPublicIp.ts#L6">utils/getMyPublicIp.ts:6</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -255,7 +286,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/makeSureDirExists.ts#L4">utils/makeSureDirExists.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/makeSureDirExists.ts#L4">utils/makeSureDirExists.ts:4</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -283,7 +314,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/makeSureFileExists.ts#L4">utils/makeSureFileExists.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/makeSureFileExists.ts#L4">utils/makeSureFileExists.ts:4</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -311,7 +342,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/configParser.ts#L73">utils/configParser.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/configParser.ts#L73">utils/configParser.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -341,7 +372,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/6cb6e79/src/utils/writeConfig.ts#L18">utils/writeConfig.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/guardline-vpn/wireguard-tools/blob/8663f5f/src/utils/writeConfig.ts#L18">utils/writeConfig.ts:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -377,6 +408,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#checkwgisinstalled" class="tsd-kind-icon">check<wbr>WgIs<wbr>Installed</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#createpeerpairs" class="tsd-kind-icon">create<wbr>Peer<wbr>Pairs</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#generateconfigstring" class="tsd-kind-icon">generate<wbr>Config<wbr>String</a>

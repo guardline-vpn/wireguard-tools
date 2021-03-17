@@ -66,10 +66,126 @@
 				<a href="#to-use" id="to-use" style="color: inherit; text-decoration: none;">
 					<h2>To use</h2>
 				</a>
-				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;wireguard-tools&#039;</span>
+				<p>Here are some examples of usage:</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">WgConfig</span><span style="color: #000000">, </span><span style="color: #001080">getConfigObjectFromFile</span><span style="color: #000000">, </span><span style="color: #001080">createPeerPairs</span><span style="color: #000000">, </span><span style="color: #001080">checkWgIsInstalled</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;../src&#039;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">filePath</span><span style="color: #000000"> = </span><span style="color: #001080">path</span><span style="color: #000000">.</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #001080">__dirname</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/configs&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;/guardline-server.conf&#039;</span><span style="color: #000000">)</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">test</span><span style="color: #000000"> = </span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">try</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// make a new config</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config1</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">WgConfig</span><span style="color: #000000">({</span>
+<span style="color: #000000">      </span><span style="color: #001080">wgInterface:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">address:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">        </span><span style="color: #001080">privateKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
+<span style="color: #000000">      },</span>
+<span style="color: #000000">      </span><span style="color: #001080">filePath</span>
+<span style="color: #000000">    })</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// give the config a name</span>
+<span style="color: #000000">    </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Guardline Server&#039;</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// update some other properties</span>
+<span style="color: #000000">    </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">postUp</span><span style="color: #000000"> = [</span><span style="color: #A31515">&#039;echo &quot;Guardline Server Up!&quot;&#039;</span><span style="color: #000000">]</span>
+<span style="color: #000000">    </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">listenPort</span><span style="color: #000000"> = </span><span style="color: #098658">5280</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// make a keypair for the config and a pre-shared key</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">keypair</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">({ </span><span style="color: #001080">preSharedKey:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> })</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// these keys will be saved to the config object</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">keypair</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000"> === </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000">) </span><span style="color: #008000">// true</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">keypair</span><span style="color: #000000">.</span><span style="color: #001080">preSharedKey</span><span style="color: #000000"> === </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">preSharedKey</span><span style="color: #000000">) </span><span style="color: #008000">// true</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">keypair</span><span style="color: #000000">.</span><span style="color: #001080">privateKey</span><span style="color: #000000"> === </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">privateKey</span><span style="color: #000000">) </span><span style="color: #008000">// true</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// get your Ip address for fun</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">myIp</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">getPublicIp</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">myIp</span><span style="color: #000000"> })</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// write the config to disk</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// read that file into another config object</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">thatConfigFromFile</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">getConfigObjectFromFile</span><span style="color: #000000">({ </span><span style="color: #001080">filePath</span><span style="color: #000000"> })</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config2</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">WgConfig</span><span style="color: #000000">({ ...</span><span style="color: #001080">thatConfigFromFile</span><span style="color: #000000">, </span><span style="color: #001080">filePath</span><span style="color: #000000"> })</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// both configs private key will be the same because config2 has been parsed</span>
+<span style="color: #000000">    </span><span style="color: #008000">// from the file written by config</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">privateKey</span><span style="color: #000000"> === </span><span style="color: #001080">config2</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">privateKey</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// however, config2 doesn&#039;t have a public key becuase WireGuard doesn&#039;t save the</span>
+<span style="color: #000000">    </span><span style="color: #008000">// the public key in the config file.</span>
+<span style="color: #000000">    </span><span style="color: #008000">// To get the public key, you&#039;ll need to run generateKeys on config2</span>
+<span style="color: #000000">    </span><span style="color: #008000">// it&#039;ll keep it&#039;s private key and derive a public key from it</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config2</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">()</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// so now the two public keys will be the same</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000"> === </span><span style="color: #001080">config2</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000">) </span><span style="color: #008000">// true</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// you can generate a new keypair by passing an arg:</span>
+<span style="color: #000000">    </span><span style="color: #001080">config2</span><span style="color: #000000">.</span><span style="color: #795E26">generateKeys</span><span style="color: #000000">({ </span><span style="color: #001080">overwrite:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> })</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// so now their public/private keys are different</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000"> === </span><span style="color: #001080">config2</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000">) </span><span style="color: #008000">// false</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// you can create a peer object from a WgConfig like this</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config2AsPeer</span><span style="color: #000000"> = </span><span style="color: #001080">config2</span><span style="color: #000000">.</span><span style="color: #795E26">createPeer</span><span style="color: #000000">({</span>
+<span style="color: #000000">      </span><span style="color: #001080">allowedIps:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1/32&#039;</span><span style="color: #000000">]</span>
+<span style="color: #000000">    })</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// you can add a peer to a config like this:</span>
+<span style="color: #000000">    </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">addPeer</span><span style="color: #000000">(</span><span style="color: #001080">config2AsPeer</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// and remove a peer like this</span>
+<span style="color: #000000">    </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">removePeer</span><span style="color: #000000">(</span><span style="color: #001080">config2</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// or you make two WgConfigs peers of each other like this:</span>
+<span style="color: #000000">    </span><span style="color: #795E26">createPeerPairs</span><span style="color: #000000">([</span>
+<span style="color: #000000">      {</span>
+<span style="color: #000000">        </span><span style="color: #001080">config:</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #008000">// The peer settings to apply when adding this config as a peer</span>
+<span style="color: #000000">        </span><span style="color: #001080">peerSettings:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">          </span><span style="color: #001080">allowedIps:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.1&#039;</span><span style="color: #000000">],</span>
+<span style="color: #000000">          </span><span style="color: #001080">preSharedKey:</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">preSharedKey</span>
+<span style="color: #000000">        }</span>
+<span style="color: #000000">      },</span>
+<span style="color: #000000">      {</span>
+<span style="color: #000000">        </span><span style="color: #001080">config:</span><span style="color: #000000"> </span><span style="color: #001080">config2</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">peerSettings:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">          </span><span style="color: #001080">allowedIps:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;10.10.1.2&#039;</span><span style="color: #000000">]</span>
+<span style="color: #000000">        }</span>
+<span style="color: #000000">      }</span>
+<span style="color: #000000">    ])</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// That will end up with config1 having config2 as a peer</span>
+<span style="color: #000000">    </span><span style="color: #008000">// and config2 having config1 as a peer</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">getPeer</span><span style="color: #000000">(</span><span style="color: #001080">config2</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000">)) </span><span style="color: #008000">// logs the peer</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">config2</span><span style="color: #000000">.</span><span style="color: #795E26">getPeer</span><span style="color: #000000">(</span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000">)) </span><span style="color: #008000">// logs the peer</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Check that the system has wireguard installed and log the version like this</span>
+<span style="color: #000000">    </span><span style="color: #008000">// (will throw an error if not installed)</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wgVersion</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">checkWgIsInstalled</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">wgVersion</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// if wireguard is installed, you can bring up your config like this:</span>
+<span style="color: #000000">    </span><span style="color: #008000">// (make sure it&#039;s been written to file first!)</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">up</span><span style="color: #000000">() </span><span style="color: #008000">// Wireguard interface is up</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// you can change something about the interface while it&#039;s up</span>
+<span style="color: #000000">    </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">dns</span><span style="color: #000000"> = [</span><span style="color: #A31515">&#039;1.1.1.1&#039;</span><span style="color: #000000">]</span>
+<span style="color: #000000">    </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// but make sure you restart the interface for your changes to take effect</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">restart</span><span style="color: #000000">()</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// and finally, when you&#039;re done, take down the interface like this</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">down</span><span style="color: #000000">()</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Thanks for reading!</span>
+<span style="color: #000000">  } </span><span style="color: #AF00DB">catch</span><span style="color: #000000"> (</span><span style="color: #001080">e</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">e</span><span style="color: #000000">)</span>
+<span style="color: #000000">  }</span>
 <span style="color: #000000">}</span>
 
 <span style="color: #795E26">test</span><span style="color: #000000">()</span>
@@ -85,7 +201,7 @@
 				<a href="#todo" id="todo" style="color: inherit; text-decoration: none;">
 					<h2>TODO</h2>
 				</a>
-				<p>Write docs as always</p>
+				<p>Write more docs as always</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -103,6 +219,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#checkwgisinstalled" class="tsd-kind-icon">check<wbr>WgIs<wbr>Installed</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#createpeerpairs" class="tsd-kind-icon">create<wbr>Peer<wbr>Pairs</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#generateconfigstring" class="tsd-kind-icon">generate<wbr>Config<wbr>String</a>
