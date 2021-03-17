@@ -1,15 +1,8 @@
-import publicIp from "public-ip"
 import { exec } from "../utils/exec"
 
 interface Options {
   preSharedKey: boolean
   privateKey?: string
-}
-
-interface ReturnType {
-  privateKey: string
-  publicKey: string
-  preSharedKey?: string
 }
 
 const stripWhiteSpace = (s: string) => s.replace(/\s/g, '')
@@ -23,16 +16,11 @@ export const generateKeyPair = async (opts?: Options) => {
   const privateKey = opts?.privateKey || await exec(`wg genkey`)
   const publicKey = await exec(`echo "${privateKey}" | wg pubkey`)
 
-  const val: ReturnType = {
+  const preSharedKey = opts?.preSharedKey ? await exec(`wg genpsk`) : undefined
+
+  return {
     privateKey: stripWhiteSpace(privateKey),
     publicKey: stripWhiteSpace(publicKey),
-    preSharedKey: undefined
+    preSharedKey: preSharedKey ? stripWhiteSpace(preSharedKey) : undefined
   }
-
-  if (opts?.preSharedKey) {
-    const preSharedKey = await exec(`wg genpsk`)
-    val.preSharedKey = stripWhiteSpace(preSharedKey)
-  }
-
-  return val
 }
