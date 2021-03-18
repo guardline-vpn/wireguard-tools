@@ -106,7 +106,7 @@ export interface WgConfigPeer {
 /** Defines the WireGuard config for this node */
 export interface WgConfigObject {
   /** Defines the VPN settings for the local node. */
-  wgInterface?: WgConfigInterface,
+  wgInterface: WgConfigInterface,
   /** An array of VPN settings for remote peers */
   peers?: WgConfigPeer[]
   /**

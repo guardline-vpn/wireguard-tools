@@ -25,12 +25,11 @@ import { WgConfig } from 'wireguard-tools'
 const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
 
 const config1 = new WgConfig({
-  wgInterface: {
-    address: ['10.10.1.1'],
-    privateKey: ''
-  },
+  wgInterface: { address: ['10.10.1.1'] },
   filePath
 })
+
+await config1.generateKeys()
 
 ```
 
@@ -44,8 +43,7 @@ const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
 
 const config1 = new WgConfig({
   wgInterface: {
-    address: ['10.10.1.1'],
-    privateKey: ''
+    address: ['10.10.1.1']
   },
   filePath
 })
@@ -64,8 +62,7 @@ const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
 
 const config1 = new WgConfig({
   wgInterface: {
-    address: ['10.10.1.1'],
-    privateKey: ''
+    address: ['10.10.1.1']
   },
   filePath
 })
@@ -90,35 +87,20 @@ const config1 = new WgConfig({
   filePath
 })
 
-// Public key will not be available because it's not saved in the WireGuard config,
-// so you need to generate keys again (it will use the existing private key)
-await config1.generateKeys()
-```
+// OR:
+const config2 = new WgConfig({ filePath })
+await config2.parseFile()
 
-### Another way to parse config from disk
-
-```ts
-import path from 'path'
-import { WgConfig } from 'wireguard-tools'
-
-const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
-
-const config1 = new WgConfig({
-  wgInterface: {
-    address: [''],
-    privateKey: ''
-  },
-  filePath
-})
-
-await config1.parseFile()
+// OR:
+const config3 = new WgConfig()
+await config3.parseFile(filePath)
 
 // Public key will not be available because it's not saved in the WireGuard config,
 // so you need to generate keys again (it will use the existing private key)
 await config1.generateKeys()
 ```
 
-### Bring up a WgConfig as a WireGuard interface
+### Bring up /bring down a WgConfig as a WireGuard interface
 
 ```ts
 import path from 'path'
@@ -128,30 +110,7 @@ const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
 
 const config1 = new WgConfig({
   wgInterface: {
-    address: ['10.10.1.1'],
-    privateKey: ''
-  },
-  filePath
-})
-
-await config1.generateKeys()
-await config1.writeToFile()
-
-await config1.up()
-```
-
-### Bring down a WgConfig as a WireGuard interface
-
-```ts
-import path from 'path'
-import { WgConfig } from 'wireguard-tools'
-
-const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
-
-const config1 = new WgConfig({
-  wgInterface: {
-    address: ['10.10.1.1'],
-    privateKey: ''
+    address: ['10.10.1.1']
   },
   filePath
 })
@@ -174,22 +133,19 @@ import { WgConfig } from 'wireguard-tools'
 
 const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
 
-const config1 = new WgConfig({
-  wgInterface: {
-    address: ['10.10.1.1'],
-    privateKey: ''
-  },
-  filePath
-})
+const config1 = new WgConfig()
+// Assuming the WireGuard config file is already on disk...
+await config1.parseFile(filePath)
 
 await config1.generateKeys()
-await config1.writeToFile()
 
 // bring up
 await config1.up()
 
 // create new key pair
 await config1.generateKeys({ overwrite: true })
+// change the name
+config1.wgInterface.name = 'new-name'
 
 // write the file to save
 await config1.writeToFile()
@@ -200,7 +156,7 @@ await config1.restart()
 
 ### Or use the save() shorcut method to write and restart
 
-Note, using this method will start the WireGuard interface unless `{ noUp: true }` is passed in.
+Note, using this method will start the WireGuard interface if it's down unless `{ noUp: true }` is passed in.
 
 ```ts
 import path from 'path'
@@ -208,22 +164,19 @@ import { WgConfig } from 'wireguard-tools'
 
 const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
 
-const config1 = new WgConfig({
-  wgInterface: {
-    address: ['10.10.1.1'],
-    privateKey: ''
-  },
-  filePath
-})
+const config1 = new WgConfig()
+// Assuming the WireGuard config file is already on disk...
+await config1.parseFile(filePath)
 
 await config1.generateKeys()
-await config1.writeToFile()
 
 // bring up
 await config1.up()
 
 // create new key pair
 await config1.generateKeys({ overwrite: true })
+// change the name
+config1.wgInterface.name = 'new-name'
 
 // write the file and restart
 await config1.save()
@@ -239,18 +192,12 @@ const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
 const filePath2 = path.join(__dirname, '/configs', '/guardline-client.conf')
 
 const server = new WgConfig({
-  wgInterface: {
-    address: ['10.10.1.1'],
-    privateKey: ''
-  },
+  wgInterface: { address: ['10.10.1.1'] },
   filePath
 })
 
 const client = new WgConfig({
-  wgInterface: {
-    address: ['10.10.1.2'],
-    privateKey: ''
-  },
+  wgInterface: { address: ['10.10.1.2'] },
   filePath: filePath2
 })
 
@@ -289,7 +236,6 @@ for (let i = 1; i <= 10; i++) {
   configs.push(new WgConfig({
     wgInterface: {
       address: [`10.10.1.${i}`],
-      privateKey: '',
       name: `Client-${i}`
     },
     filePath: path.join(__dirname, '/configs', `/guardline-${i}.conf`)
@@ -491,8 +437,7 @@ const test = async () => {
     // make a new config
     const config1 = new WgConfig({
       wgInterface: {
-        address: ['10.10.1.1'],
-        privateKey: ''
+        address: ['10.10.1.1']
       },
       filePath
     })

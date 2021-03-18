@@ -21,7 +21,7 @@ interface GenerateKeysOptions {
 /** A Javascript object representation of a WireGuard config file with some extras */
 export class WgConfig implements WgConfigObject {
   /** Defines the VPN settings for the local node. */
-  wgInterface: WgConfigObject['wgInterface']
+  wgInterface: WgConfigObject['wgInterface'] = {}
   /** An array of VPN settings for remote peers */
   peers: WgConfigObject['peers']
   /** A place to keep the public key for this node (it's not saved in the WireGuard config) */
@@ -33,9 +33,9 @@ export class WgConfig implements WgConfigObject {
   filePath: string
 
   /** creates a new WgConfig */
-  constructor(init: WgConfigObject & { filePath?: string }) {
+  constructor(init: Partial<WgConfigObject> & { filePath?: string }) {
     if (init.filePath) this.filePath = init.filePath
-    this.wgInterface = init.wgInterface
+    if (init?.wgInterface) this.wgInterface = init.wgInterface
     this.peers = init?.peers || []
     this.preSharedKey = init?.preSharedKey
     this.publicKey = init?.publicKey
@@ -61,6 +61,7 @@ export class WgConfig implements WgConfigObject {
   async parseFile(filePath?: string) {
     filePath = filePath || this.filePath
     if (!filePath) throw new Error(`No filePath found for WgConfig`)
+    this.filePath = filePath
     const res = await getConfigObjectFromFile({ filePath })
     Object.assign(this, res)
   }
