@@ -11,7 +11,7 @@ export interface WgConfigInterface {
    * between multiple clients, this can be set to a single IP of the node itself (specified with CIDR notation),
    * e.g. 192.0.2.3/32), or a range of IPv4/IPv6 subnets that the node can route traffic for.
    */
-  address: string[]
+  address?: string[]
   /**
    * When the node is acting as a public bounce server, it should hardcode a port to listen for incoming VPN connections
    * from the public internet. Clients not acting as relays should not set this value.
@@ -22,7 +22,7 @@ export interface WgConfigInterface {
    * All nodes must have a private key set, regardless of whether they are public bounce servers relaying traffic,
    * or simple clients joining the VPN.
    */
-  privateKey: string
+  privateKey?: string
   /**
    * The DNS server(s) to announce to VPN clients via DHCP, most clients will use this server for DNS requests over the VPN,
    * but clients can also override this value locally on their nodes
@@ -85,12 +85,12 @@ export interface WgConfigPeer {
    * On simple clients, this is usually a single address (the VPN address of the simple client itself).
    * For bounce servers this will be a range of the IPs or subnets that the relay server is capable of routing traffic for.
    */
-  allowedIps: string[]
+  allowedIps?: string[]
   /**
    * This is the public key for the remote node, shareable with all peers. All nodes must have a
    * public key set, regardless of whether they are public bounce servers relaying traffic, or simple clients joining the VPN.
    */
-  publicKey: string
+  publicKey?: string
   /**
    * The number of seconds between each keep-alive ping.
    * If the connection is going from a NAT-ed peer to a public peer, the node behind the NAT must regularly send an outgoing
@@ -106,7 +106,7 @@ export interface WgConfigPeer {
 /** Defines the WireGuard config for this node */
 export interface WgConfigObject {
   /** Defines the VPN settings for the local node. */
-  wgInterface: WgConfigInterface,
+  wgInterface?: WgConfigInterface,
   /** An array of VPN settings for remote peers */
   peers?: WgConfigPeer[]
   /**
