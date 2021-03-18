@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": false,
     "outDir": "dist",
-    "target": "ES5",
+    "target": "ES6",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "strictNullChecks": true,

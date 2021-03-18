@@ -7,3 +7,4 @@ tsconfig.json
 yarn.lock
 docs
 .github
+test
