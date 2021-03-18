@@ -406,7 +406,6 @@
 				</a>
 				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path&#039;</span>
 <span style="color: #AF00DB">import</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #001080">getMyPublicIp</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">checkWgIsInstalled</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">generateKeyPair</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">generateConfigString</span><span style="color: #000000">,</span>
@@ -414,10 +413,6 @@
 <span style="color: #000000">  </span><span style="color: #001080">getConfigStringFromFile</span><span style="color: #000000">,</span>
 <span style="color: #000000">  </span><span style="color: #001080">getConfigObjectFromFile</span><span style="color: #000000">,</span>
 <span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
-
-<span style="color: #008000">// get your public ip</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">myIp</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">getMyPublicIp</span><span style="color: #000000">()</span>
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">myIp</span><span style="color: #000000">) </span><span style="color: #008000">// 271.356.61.12</span>
 
 
 <span style="color: #008000">// check WireGuard is installed on the system and print version</span>
@@ -556,10 +551,6 @@
 <span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">keypair</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000"> === </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">publicKey</span><span style="color: #000000">) </span><span style="color: #008000">// true</span>
 <span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">keypair</span><span style="color: #000000">.</span><span style="color: #001080">preSharedKey</span><span style="color: #000000"> === </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">preSharedKey</span><span style="color: #000000">) </span><span style="color: #008000">// true</span>
 <span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">keypair</span><span style="color: #000000">.</span><span style="color: #001080">privateKey</span><span style="color: #000000"> === </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #001080">wgInterface</span><span style="color: #000000">.</span><span style="color: #001080">privateKey</span><span style="color: #000000">) </span><span style="color: #008000">// true</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// get your Ip address for fun</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">myIp</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">getPublicIp</span><span style="color: #000000">()</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">myIp</span><span style="color: #000000"> })</span>
 
 <span style="color: #000000">    </span><span style="color: #008000">// write the config to disk</span>
 <span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">config1</span><span style="color: #000000">.</span><span style="color: #795E26">writeToFile</span><span style="color: #000000">()</span>
@@ -706,9 +697,6 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#getconfigstringfromfile" class="tsd-kind-icon">get<wbr>Config<wbr>String<wbr>From<wbr>File</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#getmypublicip" class="tsd-kind-icon">get<wbr>MyPublic<wbr>Ip</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#makesuredirexists" class="tsd-kind-icon">make<wbr>Sure<wbr>Dir<wbr>Exists</a>
