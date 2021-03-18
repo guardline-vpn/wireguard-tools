@@ -11,7 +11,7 @@ export interface WgConfigInterface {
    * between multiple clients, this can be set to a single IP of the node itself (specified with CIDR notation),
    * e.g. 192.0.2.3/32), or a range of IPv4/IPv6 subnets that the node can route traffic for.
    */
-  address: [string, ...string[]]
+  address: string[]
   /**
    * When the node is acting as a public bounce server, it should hardcode a port to listen for incoming VPN connections
    * from the public internet. Clients not acting as relays should not set this value.
@@ -85,7 +85,7 @@ export interface WgConfigPeer {
    * On simple clients, this is usually a single address (the VPN address of the simple client itself).
    * For bounce servers this will be a range of the IPs or subnets that the relay server is capable of routing traffic for.
    */
-  allowedIps: [string, ...string[]]
+  allowedIps: string[]
   /**
    * This is the public key for the remote node, shareable with all peers. All nodes must have a
    * public key set, regardless of whether they are public bounce servers relaying traffic, or simple clients joining the VPN.
