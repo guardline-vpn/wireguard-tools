@@ -35,9 +35,7 @@
     "ext": "ts"
   },
   "dependencies": {
-    "lodash.merge": "^4.6.2",
-    "lodash.mergewith": "^4.6.2",
-    "public-ip": "^4.0.3"
+    "lodash.mergewith": "^4.6.2"
   },
   "devDependencies": {
     "@types/lodash.merge": "^4.6.6",

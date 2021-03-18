@@ -2,7 +2,6 @@ export { WgConfigObject, WgConfigInterface, WgConfigPeer } from './types/WgConfi
 
 export { WgConfig } from './WgConfig'
 export { writeConfig } from './utils/writeConfig'
-export { getMyPublicIp } from './utils/getMyPublicIp'
 export { generateKeyPair } from './utils/generateKeyPair'
 export { createPeerPairs } from './utils/createPeerPairs'
 export { makeSureDirExists } from './utils/makeSureDirExists'

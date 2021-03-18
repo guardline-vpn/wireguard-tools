@@ -364,7 +364,6 @@ await Promise.all(configs.map(x => x.writeToFile()))
 ```ts
 import path from 'path'
 import {
-  getMyPublicIp,
   checkWgIsInstalled,
   generateKeyPair,
   generateConfigString,
@@ -372,10 +371,6 @@ import {
   getConfigStringFromFile,
   getConfigObjectFromFile,
 } from ''
-
-// get your public ip
-const myIp = await getMyPublicIp()
-console.log(myIp) // 271.356.61.12
 
 
 // check WireGuard is installed on the system and print version
@@ -516,10 +511,6 @@ const test = async () => {
     console.log(keypair.publicKey === config1.publicKey) // true
     console.log(keypair.preSharedKey === config1.preSharedKey) // true
     console.log(keypair.privateKey === config1.wgInterface.privateKey) // true
-
-    // get your Ip address for fun
-    const myIp = await config1.getPublicIp()
-    console.log({ myIp })
 
     // write the config to disk
     await config1.writeToFile()

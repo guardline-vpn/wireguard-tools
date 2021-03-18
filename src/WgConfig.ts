@@ -2,7 +2,6 @@ import { generateConfigString, parseConfigString } from './utils/configParser'
 import { WgConfigObject, WgConfigPeer } from './types/WgConfigObject'
 import { getConfigObjectFromFile } from './utils/getConfigFromFile'
 import { generateKeyPair } from './utils/generateKeyPair'
-import { getMyPublicIp } from './utils/getMyPublicIp'
 import { writeConfig } from './utils/writeConfig'
 import mergeWith from 'lodash.mergewith'
 import { exec } from './utils/exec'
@@ -83,12 +82,6 @@ export class WgConfig implements WgConfigObject {
     this.wgInterface.privateKey = keys.privateKey
     this.preSharedKey = keys.preSharedKey
     return keys
-  }
-
-  /** Get publicIp for this machine */
-  async getPublicIp() {
-    const publicIp = await getMyPublicIp()
-    return publicIp
   }
 
   /**
