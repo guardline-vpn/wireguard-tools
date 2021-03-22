@@ -1,5 +1,5 @@
-import fs from 'fs/promises'
-
+import f from 'fs'
+const fs = f.promises
 /** make sure a file exists on the file system */
 export const makeSureFileExists = async (path: string) => {
   try {

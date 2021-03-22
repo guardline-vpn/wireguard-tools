@@ -1,4 +1,5 @@
-import fs from 'fs/promises'
+import f from 'fs'
+const fs = f.promises
 import { parseConfigString } from './configParser'
 
 interface Options {

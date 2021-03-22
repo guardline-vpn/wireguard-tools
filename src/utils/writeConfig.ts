@@ -1,4 +1,5 @@
-import fs from 'fs/promises'
+import f from 'fs'
+const fs = f.promises
 import path from 'path'
 import { WgConfigObject } from '../types/WgConfigObject'
 import { generateConfigString } from './configParser'
