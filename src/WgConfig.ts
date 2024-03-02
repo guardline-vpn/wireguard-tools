@@ -5,6 +5,7 @@ import { generateKeyPair } from './utils/generateKeyPair'
 import { writeConfig } from './utils/writeConfig'
 import mergeWith from 'lodash.mergewith'
 import { exec } from './utils/exec'
+import { getInterfaceNameFromFile } from './utils/getInterfaceNameFromFile'
 
 interface GenerateKeysOptions {
   /** Also create a preshared key */
@@ -134,6 +135,22 @@ export class WgConfig implements WgConfigObject {
     if (!publicKey) return undefined
     if (!this.peers || !this.peers.length) return undefined
     return this.peers.find(x => x.publicKey === publicKey)
+  }
+
+  /** Checks if the wireguard interface is up */
+  async isUp(filePath?: string) {
+    filePath = filePath || this.filePath
+    if (!filePath) throw new Error(`No filePath found for WgConfig`)
+    const interfaceName = getInterfaceNameFromFile(filePath)
+    try {
+      await exec(`wg show ${interfaceName}`)
+      return true
+    } catch (e) {
+      if (e.code !== 0 && e.message.includes('Unable to access interface: No such device')) {
+        return false
+      }
+      throw e
+    }
   }
 
   /** brings up the wireguard interface */

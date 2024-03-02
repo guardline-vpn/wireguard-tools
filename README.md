@@ -100,6 +100,19 @@ await config3.parseFile(filePath)
 await config1.generateKeys()
 ```
 
+### Check if the WireGuard interface is up
+
+```ts
+const filePath = path.join(__dirname, '/configs', '/guardline-server.conf')
+
+const config1 = new WgConfig({ filePath })
+const interface1IsUp = await config1.isUp()
+
+// OR:
+const config2 = new WgConfig()
+const interface2IsUp = await config2.isUp(filePath)
+```
+
 ### Bring up /bring down a WgConfig as a WireGuard interface
 
 ```ts
@@ -120,9 +133,11 @@ await config1.writeToFile()
 
 // bring up
 await config1.up()
+await config1.isUp() // will resolve to true
 
 // bring down
 await config1.down()
+await config1.isUp() // will resolve to false
 ```
 
 ### To change a WgConfig while up, you need to restart
