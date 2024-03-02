@@ -5,6 +5,7 @@ import { generateKeyPair } from './utils/generateKeyPair'
 import { writeConfig } from './utils/writeConfig'
 import mergeWith from 'lodash.mergewith'
 import { exec } from './utils/exec'
+import { getInterfaceNameFromFile } from './utils/getInterfaceNameFromFile'
 
 interface GenerateKeysOptions {
   /** Also create a preshared key */
@@ -182,6 +183,26 @@ export class WgConfig implements WgConfigObject {
   async restart(filePath?: string) {
     await this.down(filePath)
     await this.up(filePath)
+  }
+
+  /**
+   * Reloads the wireguard interface with the latest configs without disrupting the interface.
+   *
+   * Nothing will append if the interface is not up.
+   **/
+  async reload(filePath?: string) {
+    filePath = filePath || this.filePath
+    if (!filePath) throw new Error(`No filePath found for WgConfig`)
+    const interfaceName = getInterfaceNameFromFile(filePath)
+    try {
+      await exec(`wg syncconf ${interfaceName} <(wg-quick strip ${filePath})`)
+    } catch (e) {
+      if (e.code !== 0 && e.message.includes('Unable to retrieve current interface configuration: No such device')) {
+        // Ignore as interface is not up.
+        return
+      }
+      throw e
+    }
   }
 
   /** Saves the config to file and restarts it unless `{ noUp: true }` is passed */

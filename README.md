@@ -125,7 +125,7 @@ await config1.up()
 await config1.down()
 ```
 
-### To change a WgConfig while up, you need to restart
+### To change a WgConfig while up, you need to reload or restart
 
 ```ts
 import path from 'path'
@@ -150,7 +150,9 @@ config1.wgInterface.name = 'new-name'
 // write the file to save
 await config1.writeToFile()
 
-// restart for the changes to take effect
+// reload for the changes to take effect
+await config1.reload()
+// OR: restart
 await config1.restart()
 ```
 
